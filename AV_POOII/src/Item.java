@@ -6,6 +6,4 @@ public class Item
 	int quantidade;
 	double valor;
 	LocalDate diaQuePegou;
-	Type categoria;
-	
 }
