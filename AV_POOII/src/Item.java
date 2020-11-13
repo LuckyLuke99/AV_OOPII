@@ -6,4 +6,9 @@ public class Item
 	int quantidade;
 	double valor;
 	LocalDate diaQuePegou;
+	String nome;
+	int quantidade;
+	double valor;
+	LocalDate diaQuePegou;
+	
 }
