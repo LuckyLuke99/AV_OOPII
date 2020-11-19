@@ -5,5 +5,5 @@ public class Item
 	String nome;
 	int quantidade;
 	double valor;
-	LocalDate diaQuePegou;
+	LocalDate validade;
 }

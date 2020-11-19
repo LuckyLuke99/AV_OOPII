@@ -1,5 +1,5 @@
 
-public class Type 
+public class Tipo 
 {
 	String raridade;
 }
