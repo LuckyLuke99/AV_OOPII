@@ -1,7 +1,7 @@
 public class Item 
 {
-	private String nome, categoria;
-	private Skin[] skins;
+	private String nome = null, categoria = null;
+	private Skin[] skins = null;
 	
 	public String getNome() 
 	{
@@ -28,5 +28,4 @@ public class Item
 	{
 		this.skins = skins;
 	}
-	
 }

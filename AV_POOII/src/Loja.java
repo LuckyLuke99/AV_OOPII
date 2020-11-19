@@ -2,8 +2,8 @@ import java.time.LocalDate;
 
 public class Loja 
 {
-	private LocalDate rotacao, proximaRotacao;
-	private Item[] itemsParaComprar;
+	private LocalDate rotacao, proximaRotacao = null;
+	private Item[] itemsParaComprar = null;
 	
 	public LocalDate getRotacao() 
 	{

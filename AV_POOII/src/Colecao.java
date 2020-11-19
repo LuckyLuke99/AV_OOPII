@@ -1,16 +1,16 @@
+import java.util.LinkedHashSet;
+
 public class Colecao 
 {
-	private Item[] items;
+	private LinkedHashSet<Item> items;
 
-	public Item[] getItems() 
+	public LinkedHashSet<Item> getItems() 
 	{
 		return items;
 	}
 
-	public void setItems(Item[] items) 
+	public void setItems(LinkedHashSet<Item> items) 
 	{
 		this.items = items;
 	}
-	
-	
 }

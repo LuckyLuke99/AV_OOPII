@@ -1,9 +1,9 @@
 public class Skin 
 {
-	private String nome;
-	private int rariedade;
-	private double valor;
-	private boolean possui;
+	private String nome = null;
+	private int rariedade = 1;
+	private double valor = 0.0;
+	private boolean possui = false;
 	
 	public String getNome() 
 	{
