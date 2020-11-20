@@ -1,6 +1,5 @@
 public class Skin 
 {
-	//foi?
 	private String nome = null;
 	private int rariedade = 1;
 	private double valor = 0.0;
