@@ -1,7 +1,8 @@
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 
-public class Conta 
+public class Conta
 {
 	private String login = null;
 	private LocalDate criacao = null;

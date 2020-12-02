@@ -1,14 +1,15 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ClassTeste 
 {
 
-	public static void main(String[] args) 
+	public static void main(String[] args) throws IOException 
 	{
 		Cliente Valorant = new Cliente ();
-		
-		System.out.println("Fim");
+	
 		try (Scanner in = new Scanner(System.in)){
 			boolean bMain = true;
 			
@@ -70,9 +71,11 @@ public class ClassTeste
 					
 				}
 				
-				if(Opcao > 5)
+				if(Opcao == 5)
 				{
-					System.out.println("\nO Programa foi encerrado!");
+					System.out.print("\nGravando arquivos...");
+					Valorant.gravarCliente();
+					bMain = false;
 				}
 				
 				if(Opcao > 5)
@@ -86,5 +89,6 @@ public class ClassTeste
 		catch(InputMismatchException e) {	
 			System.out.println("Erro na entrada de dados!!!");
 		}
+		System.out.println("\nO Programa foi encerrado!");
 	}
 }
