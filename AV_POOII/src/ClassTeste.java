@@ -87,5 +87,4 @@ public class ClassTeste
 			System.out.println("Erro na entrada de dados!!!");
 		}
 	}
-
 }
