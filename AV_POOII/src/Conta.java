@@ -87,7 +87,7 @@ public class Conta
 	}
 	@Override
 	public String toString() {
-		return "Conta [login=" + login + ", dinheiro=" + dinheiro + ", espaco=" + espaco + ", Items=" + Items + "]";
+		return "----------------" + "\nConta" + "\nLogin: " + login + "\nDinheiro: " + dinheiro + "\nEspaco máximo: " + espaco + "\nQuantidade de items: " + Items.size();
 	}
 
 	

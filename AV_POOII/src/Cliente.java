@@ -127,5 +127,9 @@ public class Cliente
 		Contas.forEach(c -> System.out.println(c.toString()));
 	}
 	
-	
+	public void listarItems (Conta aux_conta)
+	{
+		System.out.print("Lista de items do " + aux_conta.getLogin());
+		aux_conta.getItems().forEach(i -> i.toString());
+	}
 }

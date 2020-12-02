@@ -73,7 +73,7 @@ public class Item
 
 	@Override
 	public String toString() {
-		return "Item [nome=" + nome + ", valor=" + valor + "]";
+		return "\nItem nome: " + nome + ",seu valor: " + valor;
 	}
 	
 }
