@@ -1,45 +1,50 @@
+import java.util.LinkedHashSet;
 
 public class Conta 
 {
 	private String login = null;
 	private double dinheiro = 0.0;
-	private Colecao ColecaoItems = null;
+	private int espaco = 10;
+	private LinkedHashSet<Item> Items  = new LinkedHashSet<Item>();
 	
-	public Conta (String aux_login)
+	public Conta (String aux_nome)
 	{
-		login = aux_login;
+		login = aux_nome;
 	}
 	
-	public String getLogin ()
-	{
+	// Get and Set
+	public String getLogin() {
 		return login;
 	}
-	
-	public double getDinheiro() 
-	{
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	public double getDinheiro() {
 		return dinheiro;
 	}
-	
-	public void setDinheiro(double dinheiro)
-	{
+	public void setDinheiro(double dinheiro) {
 		this.dinheiro = dinheiro;
 	}
-	
-	public Colecao getColecaoItems() 
-	{
-		return ColecaoItems;
+	public int getEspaco() {
+		return espaco;
+	}
+	public void setEspaco(int espaco) {
+		this.espaco = espaco;
+	}
+	public LinkedHashSet<Item> getItems() {
+		return Items;
+	}
+	public void setItems(LinkedHashSet<Item> items) {
+		Items = items;
 	}
 	
-	public void setColecaoItems(Colecao colecaoItems) 
+	// Metodos
+	public void adicionarItem (String aux_nome, double aux_valor)
 	{
-		ColecaoItems = colecaoItems;
+		Items.add(new Item(aux_nome, aux_valor));
 	}
-
-	@Override
-	public String toString() {
-		return "Conta [login=" + login + ", dinheiro=" + dinheiro + ", ColecaoItems=" + ColecaoItems + "]";
-	}
-
+	
+	//Override
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -47,7 +52,6 @@ public class Conta
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -65,4 +69,9 @@ public class Conta
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		return "Conta [login=" + login + ", dinheiro=" + dinheiro + ", espaco=" + espaco + ", Items=" + Items + "]";
+	}
+					
 }

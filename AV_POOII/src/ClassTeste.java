@@ -7,7 +7,7 @@ public class ClassTeste
 	public static void main(String[] args) 
 	{
 		Cliente Valorant = new Cliente ();
-
+		
 		System.out.println("Fim");
 		try (Scanner in = new Scanner(System.in)){
 			boolean bMain = true;
@@ -30,7 +30,8 @@ public class ClassTeste
 					System.out.println("\n****************");
 					System.out.println("\nEscolha a opção: ");
 					System.out.println("1 - Adicionar Conta");
-					System.out.println("2 - Sair");
+					System.out.println("2 - Adicionar Item");
+					System.out.println("3 - Sair");
 					Opcao01 = in.nextInt();
 					
 					if(Opcao01 == 1)
@@ -39,7 +40,19 @@ public class ClassTeste
 						System.out.println("\nDigite o nome da conta: ");
 						Valorant.adicionarConta(in.next());
 					}
-					}while(Opcao01 != 2);
+					if(Opcao01 == 2)
+					{
+						System.out.println("\n****************");
+						System.out.println("\nDigite a conta que irá adicionar: ");
+						Conta aux_Conta = new Conta(in.next());
+						System.out.println("\nDigite o nome do item: ");
+						Item aux_item = new Item(in.next());
+						System.out.println("\nDigite o valor do item: ");
+						aux_item.setValor(in.nextDouble());
+				
+						Valorant.adicionarItem(aux_Conta, aux_item.getNome(), aux_item.getValor());
+					}
+					}while(Opcao01 != 3);
 				}
 				
 				if(Opcao == 2)
@@ -49,7 +62,7 @@ public class ClassTeste
 				}
 				if(Opcao == 3)
 				{
-
+					System.out.println("\n****************");
 				}
 				
 				if(Opcao == 4)
