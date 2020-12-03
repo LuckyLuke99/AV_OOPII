@@ -1,45 +1,67 @@
+import java.time.LocalDate;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 
-public class Conta 
+public class Conta
 {
 	private String login = null;
+	private LocalDate criacao = null;
 	private double dinheiro = 0.0;
-	private Colecao ColecaoItems = null;
+	private int espaco = 2;
+	private LinkedHashSet<Item> Items  = new LinkedHashSet<Item>();
 	
-	public Conta (String aux_login)
+	public Conta (String aux_nome)
 	{
-		login = aux_login;
+		login = aux_nome;
+		criacao = LocalDate.now();
 	}
-	
-	public String getLogin ()
+	public Conta (String aux_nome, LocalDate aux_criacao, double aux_dinheiro, int aux_espaco)
 	{
+		login = aux_nome;
+		criacao = aux_criacao;
+		dinheiro = aux_dinheiro;
+		espaco = aux_espaco;
+	}
+	// Get and Set
+	public String getLogin() {
 		return login;
 	}
-	
-	public double getDinheiro() 
-	{
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	public double getDinheiro() {
 		return dinheiro;
 	}
-	
-	public void setDinheiro(double dinheiro)
-	{
+	public void setDinheiro(double dinheiro) {
 		this.dinheiro = dinheiro;
 	}
-	
-	public Colecao getColecaoItems() 
+	public int getEspaco() {
+		return espaco;
+	}
+	public void setEspaco(int espaco) {
+		this.espaco = espaco;
+	}
+	public LinkedHashSet<Item> getItems() {
+		return Items;
+	}
+	public void setItems(LinkedHashSet<Item> items) {
+		Items = items;
+	}
+	public LocalDate getCriacao() {
+		return criacao;
+	}
+	public void setCriacao(LocalDate criacao) {
+		this.criacao = criacao;
+	}
+	// Metodos
+	public void adicionarItem (String aux_nome, double aux_valor)
 	{
-		return ColecaoItems;
+		Items.add(new Item(aux_nome, aux_valor));
 	}
-	
-	public void setColecaoItems(Colecao colecaoItems) 
-	{
-		ColecaoItems = colecaoItems;
+	public int getItemsSize() {
+		return Items.size();
 	}
-
-	@Override
-	public String toString() {
-		return "Conta [login=" + login + ", dinheiro=" + dinheiro + ", ColecaoItems=" + ColecaoItems + "]";
-	}
-
+	//Override
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -47,7 +69,6 @@ public class Conta
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -64,5 +85,12 @@ public class Conta
 			return false;
 		return true;
 	}
+	@Override
+	public String toString() {
+		return "----------------" + "\nConta" + "\nLogin: " + login + "\nDinheiro: " + dinheiro + "\nEspaco máximo: " + espaco + "\nQuantidade de items: " + Items.size();
+	}
+
 	
+
+			
 }
