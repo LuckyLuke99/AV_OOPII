@@ -34,7 +34,6 @@ public class Cliente
 		double dinheiro;
 		int espaco;
 		Contas.forEach(c ->{
-			System.out.print(c);
 			try {
 				gravarArq.writeUTF(c.getLogin());
 				gravarArq.writeUTF(c.getCriacao().format(formatter));
@@ -49,7 +48,6 @@ public class Cliente
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					System.out.print("\n" + "\n" + i.toString());
 				});
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -127,9 +125,27 @@ public class Cliente
 		Contas.forEach(c -> System.out.println(c.toString()));
 	}
 	
-	public void listarItems (Conta aux_conta)
+	public void listarItems (Object aux_conta)
 	{
-		System.out.print("Lista de items do " + aux_conta.getLogin());
-		aux_conta.getItems().forEach(i -> i.toString());
+		Contas.forEach(c ->{
+			if(c.equals(aux_conta))
+			{
+				if(c.getItemsSize() > 0)
+				{
+					System.out.print("\nLista de items do " + c.getLogin() + ":");
+					c.getItems().forEach(i -> System.out.print(i.toString()));
+					return;
+				}
+				if(c.getItemsSize() == 0) {
+					System.out.print("\nConta não possui items!");
+					return;
+				}
+			}
+			else
+			{
+				//System.out.print("Conta não encontrada!");
+			}
+		});
+		
 	}
 }
