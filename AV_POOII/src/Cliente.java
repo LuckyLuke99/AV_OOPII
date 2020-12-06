@@ -269,4 +269,19 @@ public class Cliente
 			System.out.println("Conta não achada!");
 		}
 	}
+	
+
+	public LinkedHashSet<Conta> getContas() {
+		return Contas;
+	}
+
+	public Conta pesquisarConta (String aux_nome) {
+		aux_Conta = new Conta(aux_nome);
+		Contas.forEach(c ->{
+			if(c.equals(aux_Conta)) {
+				aux_Conta = c;
+			}
+		});
+		return aux_Conta;
+	}
 }
