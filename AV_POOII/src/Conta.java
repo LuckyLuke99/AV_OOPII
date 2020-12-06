@@ -22,6 +22,10 @@ public class Conta
 		dinheiro = aux_dinheiro;
 		espaco = aux_espaco;
 	}
+	
+	public Conta () {
+		
+	}
 	// Get and Set
 	public String getLogin() {
 		return login;
