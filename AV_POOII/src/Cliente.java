@@ -14,9 +14,13 @@ public class Cliente
 {
 	boolean bLogin;
 	private LinkedHashSet<Conta> Contas  = new LinkedHashSet<Conta>();
-	LinkedHashSet<Conta> Contas2;
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private File fArquivo = null;
+	private String inf_aux, inf_aux2;
+	private Item aux_item = new Item();
+	private Conta aux_Conta = new Conta(); // Conta auxiliar para o metodo encontrarConta
+	private boolean aux_bool;
+	int index;
 	
 	public Cliente () throws IOException 
 	{
@@ -120,9 +124,16 @@ public class Cliente
 			});
 	}
 		
-	public void listarContas ()
+	public String[] listarContas ()
 	{
-		Contas.forEach(c -> System.out.println(c.toString()));
+		String ListaContas[]= new String[Contas.size()];
+		 index = 0;
+		
+		Contas.forEach(c ->{
+			ListaContas[index] = c.toString();
+			index = index + 1;
+		});
+		return ListaContas;
 	}
 	
 	public void listarItems (Object aux_conta)
@@ -147,5 +158,115 @@ public class Cliente
 			}
 		});
 		
+	}
+	
+	public String pesquisarConta (Conta aux_conta)
+	{
+		inf_aux = "Nenhuma informação encontrada!";
+		Contas.contains(aux_conta);
+		Contas.forEach(c ->{
+			if(c.equals(aux_conta))
+			{
+				inf_aux = c.toString();
+			}
+		});
+		return inf_aux;
+	}
+	
+	public String pesquisarItem (String aux_nome)
+	{
+		aux_bool = false;
+		aux_item.setNome(aux_nome);
+		inf_aux = "Nenhuma informação encontrada!";
+		inf_aux = "";
+		Contas.forEach(c ->{
+			c.getItems().forEach(i ->{
+				if (i.equals(aux_item))
+				{
+					inf_aux += c.getLogin();
+					inf_aux += i.toString();
+				}
+			});
+		});
+		if(aux_bool == true) // Retorna uma string com as informações encontradas
+		{
+			return inf_aux2;
+		}
+		else // Retorna que nenhuma informação foi encontrada
+		{
+		return inf_aux;
+		}
+	}
+	
+	public void setValorConta (Conta aux_conta, double aux_valor) {
+		Contas.forEach(c ->{
+			if(c.equals(aux_conta))
+			{
+				c.setDinheiro(aux_valor);
+			}
+		});
+	}
+	
+	public void setEspacoConta (Conta aux_conta, int aux_espaco) {
+		Contas.forEach(c ->{
+			if(c.equals(aux_conta))
+			{
+				c.setEspaco(aux_espaco);
+			}
+		});
+	}
+	
+	public void setValorItem (Conta aux_conta, String aux_nome, double aux_valor){
+		aux_item.setNome(aux_nome);
+		Contas.forEach(c ->{
+			if(c.equals(aux_conta))
+			{
+				c.getItems().forEach(i ->{
+					if(i.equals(aux_nome))
+					{
+						i.setValor(aux_valor);
+					}
+				});
+			}
+		});
+	}
+	
+	public void removerConta (Conta aux_conta) {
+		aux_bool = false;
+		Contas.forEach(c ->{
+			if(c.equals(aux_conta))
+			{
+				aux_bool = true;
+			}
+		});
+		if(aux_bool) {
+			Contas.remove(aux_conta);
+			System.out.println("Conta removida com sucesso!");
+		}
+		else{
+			System.out.println("Conta não achada!");
+		}
+	}
+	
+	public void removerItem(Conta aux_conta, String aux_nome) {
+		aux_bool = false;
+		aux_item.setNome(aux_nome);
+		Contas.forEach(c ->{
+			if(c.equals(aux_conta))
+			{
+				c.getItems().forEach(i ->{
+					if(i.equals(aux_item)) {
+						aux_bool = true;
+					}
+				});
+			}
+		});
+		if(aux_bool) {
+			Contas.remove(aux_conta);
+			System.out.println("Conta removida com sucesso!");
+		}
+		else{
+			System.out.println("Conta não achada!");
+		}
 	}
 }

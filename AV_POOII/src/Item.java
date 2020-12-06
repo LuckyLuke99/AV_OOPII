@@ -42,13 +42,15 @@ public class Item
 	
 	// Override
 	@Override
+	public String toString() {
+		return "\nItem nome: " + nome + ", seu valor: " + valor;
+	}
+
+	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(valor);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -66,14 +68,7 @@ public class Item
 				return false;
 		} else if (!nome.equals(other.nome))
 			return false;
-		if (Double.doubleToLongBits(valor) != Double.doubleToLongBits(other.valor))
-			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "\nItem nome: " + nome + ", seu valor: " + valor;
 	}
 	
 }
