@@ -139,29 +139,23 @@ public class Cliente
 		return ListaContas;
 	}
 	
-	public void listarItems (Object aux_conta)
-	{
-		Contas.forEach(c ->{
-			if(c.equals(aux_conta))
-			{
-				if(c.getItemsSize() > 0)
-				{
-					System.out.print("\nLista de items do " + c.getLogin() + ":");
-					c.getItems().forEach(i -> System.out.print(i.toString()));
-					return;
-				}
-				if(c.getItemsSize() == 0) {
-					System.out.print("\nConta não possui items!");
-					return;
-				}
-			}
-			else
-			{
-				//System.out.print("Conta não encontrada!");
-			}
-		});
-		
-	}
+//	public String listarItems (Object aux_conta)
+//	{
+////		inf_aux = "Listar items do ";
+////		Contas.forEach(c ->{
+////			if(c.equals(aux_conta))
+////			{	inf_aux = "Listar items do " + c.getLogin() + ":";
+////				if(c.getItemsSize() > 0)
+////				{
+////					c.getItems().forEach(i -> inf_aux += i.toString());
+////				}
+////				if(c.getItemsSize() == 0) {
+////					inf_aux +=Conta não possui items!");
+////				}
+////			}
+////		});
+////		return inf_aux;
+//	}
 	
 	public String pesquisarConta (Conta aux_conta)
 	{
@@ -259,6 +253,7 @@ public class Cliente
 			{
 				c.getItems().forEach(i ->{
 					if(i.equals(aux_item)) {
+						c.setDinheiro(i.getValor()+c.getDinheiro());
 						c.getItems().remove(aux_item);
 					}
 				});
