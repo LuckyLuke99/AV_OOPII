@@ -183,6 +183,7 @@ public class Cliente
 			c.getItems().forEach(i ->{
 				if (i.equals(aux_item))
 				{
+					inf_aux += "\n";
 					inf_aux += c.getLogin();
 					inf_aux += i.toString();
 				}
@@ -249,25 +250,17 @@ public class Cliente
 	}
 	
 	public void removerItem(Conta aux_conta, String aux_nome) {
-		aux_bool = false;
 		aux_item.setNome(aux_nome);
 		Contas.forEach(c ->{
 			if(c.equals(aux_conta))
 			{
 				c.getItems().forEach(i ->{
 					if(i.equals(aux_item)) {
-						aux_bool = true;
+						c.getItems().remove(aux_item);
 					}
 				});
 			}
 		});
-		if(aux_bool) {
-			Contas.remove(aux_conta);
-			System.out.println("Conta removida com sucesso!");
-		}
-		else{
-			System.out.println("Conta não achada!");
-		}
 	}
 	
 
