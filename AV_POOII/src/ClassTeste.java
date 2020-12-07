@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+//Classe para testar as interações sem a interface
+
 public class ClassTeste 
 {
 

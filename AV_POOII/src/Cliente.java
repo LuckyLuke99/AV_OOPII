@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.io.DataOutputStream;
 import java.io.DataInputStream;
@@ -14,6 +16,7 @@ public class Cliente
 {
 	boolean bLogin;
 	private LinkedHashSet<Conta> Contas  = new LinkedHashSet<Conta>();
+	private LinkedHashSet<Conta> aux_Contas  = new LinkedHashSet<Conta>();
 	private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private File fArquivo = null;
 	private String inf_aux, inf_aux2;
@@ -276,5 +279,46 @@ public class Cliente
 		});
 		return aux_Conta;
 	}
+	
+	public void listagemPorEspaco() {
+		ComparaPorEspaco comparaEspaco = new ComparaPorEspaco();
+		ArrayList listaAux = new ArrayList<>(Contas);
+		aux_Contas.removeAll(aux_Contas);
+		Collections.sort(listaAux, comparaEspaco);
+		
+		for(int i = 0; i < listaAux.size(); i++) {
+			aux_Contas.add((Conta) listaAux.get(i));
+			System.out.println(listaAux.get(i));
+		}
+		Contas = aux_Contas;
+	}
+	
+	public void listagemPorNome() {
+		ComparaPorNome comparaNome = new ComparaPorNome();
+		ArrayList listaAux = new ArrayList<>(Contas);
+		aux_Contas.removeAll(aux_Contas);
+		Collections.sort(listaAux, comparaNome);
+		
+		for(int i = 0; i < listaAux.size(); i++) {
+			aux_Contas.add((Conta) listaAux.get(i));
+			System.out.println(listaAux.get(i));
+		}
+		Contas = aux_Contas;
+	}
+	
+	public void listagemPorDinheiro() {
+		ComparaPorDinheiro comparaDinheiro = new ComparaPorDinheiro();
+		ArrayList listaAux = new ArrayList<>(Contas);
+		aux_Contas.removeAll(aux_Contas);
+		Collections.sort(listaAux, comparaDinheiro);
+		
+		for(int i = 0; i < listaAux.size(); i++) {
+			aux_Contas.add((Conta) listaAux.get(i));
+			System.out.println(listaAux.get(i));
+		}
+		Contas = aux_Contas;
+		
+	}
+	
 	
 }

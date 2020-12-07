@@ -1,8 +1,9 @@
 import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.function.Consumer;
 
-public class Conta
+public class Conta implements Comparable
 {
 	private String login = null;
 	private LocalDate criacao = null;
@@ -21,6 +22,13 @@ public class Conta
 		criacao = aux_criacao;
 		dinheiro = aux_dinheiro;
 		espaco = aux_espaco;
+	}
+	public Conta (Conta aux_conta) {
+		login = aux_conta.getLogin();
+		criacao = aux_conta.getCriacao();
+		dinheiro = aux_conta.getDinheiro();
+		espaco = aux_conta.getEspaco();
+		Items = aux_conta.getItems();
 	}
 	
 	public Conta () {
@@ -97,8 +105,10 @@ public class Conta
 	public String toString() {
 		return "----------------" + "\nConta" + "\nLogin: " + login + "\nDinheiro: " + dinheiro + "\nEspaco máximo: " + espaco + "\nQuantidade de items: " + Items.size();
 	}
-
-	
-
+	@Override
+	public int compareTo(Object arg0) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 			
 }
