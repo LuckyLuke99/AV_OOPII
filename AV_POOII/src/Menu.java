@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class Menu extends JFrame {
+public class Menu extends JFrame{
 	JMenuBar barra = new JMenuBar();
 	Cliente Valorant;
 	Container tela;
@@ -43,6 +43,7 @@ public class Menu extends JFrame {
 	JMenuItem conta02 = new JMenuItem("Conta");
 	JMenuItem item02 = new JMenuItem("Item em conta");
 	JMenuItem item03 = new JMenuItem("Item em todas as contas");
+	JMenuItem item05 = new JMenuItem("Todos items da conta");
 	
 	//Items menu pesquisar
 	JMenuItem conta03 = new JMenuItem("Conta");
@@ -58,7 +59,10 @@ public class Menu extends JFrame {
 	
 	//Atributos auxiliares
 	int index;
+	boolean aux_boolean;
+	String aux_list[] = null;
 	
+	//Teste
 	public Menu() throws IOException {
 		setJMenuBar(barra);
 		Valorant = new Cliente();
@@ -113,6 +117,7 @@ public class Menu extends JFrame {
 		remover.add(conta02);
 		remover.add(item02);
 		remover.add(item03);
+		remover.add(item05);
 		
 		barra.add(pesquisar);
 		pesquisar.add(conta03);
@@ -140,7 +145,9 @@ public class Menu extends JFrame {
 			}
 		}
 		
-	}
+		//Teste
+}
+	
 	
 	public void atualizarLista() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -162,17 +169,17 @@ public class Menu extends JFrame {
 		lista.addListSelectionListener( new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e){
 				
-				campo02.setText(String.format("%1$,.2f", Valorant.pesquisarConta(lista.getSelectedValue().toString()).getDinheiro()));
+				campo02.setText(Double.toString(Valorant.pesquisarConta(lista.getSelectedValue().toString()).getDinheiro()));
 			}
 		});
 		lista.addListSelectionListener( new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e){
-				campo03.setText(String.format("%4.3f", Valorant.pesquisarConta(lista.getSelectedValue().toString()).getEspaco()));
+				campo03.setText(Integer.toString(Valorant.pesquisarConta(lista.getSelectedValue().toString()).getEspaco()));
 			}
 		});
 		lista.addListSelectionListener( new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e){
-				campo04.setText(String.format("%4.3f", Valorant.pesquisarConta(lista.getSelectedValue().toString()).getItemsSize()));
+				campo04.setText(Integer.toString(Valorant.pesquisarConta(lista.getSelectedValue().toString()).getItemsSize()));
 			}
 		});
 		lista.addListSelectionListener( new ListSelectionListener() {
@@ -182,14 +189,150 @@ public class Menu extends JFrame {
 		});
 	}
 	
-	private void respondeAoEvento(ActionEvent evento) {
-		if(evento.getSource() == conta) {
-			System.out.print("Oii");
+	private void respondeAoEvento(ActionEvent evento){
+		//Pesquisar Cota
+		if(evento.getSource() == conta03) {
+			String resp01=JOptionPane.showInputDialog(null,"Qual o login?", "Pesquisando conta", JOptionPane.QUESTION_MESSAGE);
+			Conta aux_conta = new Conta(resp01);
+			if(Valorant.getContas().contains(aux_conta)) {
+				JOptionPane.showMessageDialog(null, "Conta pesquisada: " + "\n" + Valorant.pesquisarConta(aux_conta));
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Não foi possível encontrar conta!");
+			}
 		}
-		
+		//Pesquisar item
+		if(evento.getSource() == item04) {
+			String resp01=JOptionPane.showInputDialog(null,"Qual o item", "Pesquisando item", JOptionPane.QUESTION_MESSAGE);
+			Item aux_item = new Item(resp01);
+			aux_boolean = false;	
+			Valorant.getContas().forEach(c->{
+				if(c.getItems().contains(aux_item))
+					aux_boolean = true;
+			});
+			if(aux_boolean) {
+				JOptionPane.showMessageDialog(null, "Contas com o item: " + "\n" + Valorant.pesquisarItem(resp01));
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Não foi possível encontrar nenhum item!");
+			}
+		}
+		//Adicionando item
+		if(evento.getSource() == item) {
+			String resp01 = JOptionPane.showInputDialog(null,"Qual o login?", "Adicionando item", JOptionPane.QUESTION_MESSAGE);
+			String resp02 = JOptionPane.showInputDialog(null,"Qual o item", "Adicionando item", JOptionPane.QUESTION_MESSAGE);
+			double resp03 = Double.parseDouble(JOptionPane.showInputDialog(null,"Qual o valor do item","Adicionando item", JOptionPane.QUESTION_MESSAGE));
+			
+			Conta aux_conta = new Conta(resp01);
+			Item aux_item = new Item(resp02);
+			aux_boolean = false;
+			
+			if (((Conta)Valorant.pesquisarConta(aux_conta.getLogin())).getItems().contains(aux_item)){
+				aux_boolean = true;
+			}
+			if(Valorant.getContas().contains(aux_conta) && !aux_boolean) {
+				Valorant.adicionarItem(aux_conta, resp02, resp03);
+				JOptionPane.showMessageDialog(null, "Item adicionado com sucesso!");
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Não foi possível adicionar o item!!");
+			}
+		}
+		//Removendo item da conta
+		if(evento.getSource() == item02) {
+			String resp01 = JOptionPane.showInputDialog(null,"Qual o login?", "Adicionando item", JOptionPane.QUESTION_MESSAGE);
+			String resp02 = JOptionPane.showInputDialog(null,"Qual o item", "Adicionando item", JOptionPane.QUESTION_MESSAGE);
+			
+			Conta aux_conta = new Conta(resp01);
+			Item aux_item = new Item(resp02);
+			aux_boolean = false;
+			if (((Conta)Valorant.pesquisarConta(aux_conta.getLogin())).getItems().contains(aux_item)){
+				aux_boolean = true;
+			}
+			if(Valorant.getContas().contains(aux_conta) && aux_boolean) {
+				Valorant.removerItem(aux_conta, resp02);
+				JOptionPane.showMessageDialog(null, "Item removido com sucesso!");
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Não foi possível remover o item!!");
+			}
+		}
+		//Removendo dos item da conta
+		if(evento.getSource() == item05) {
+			String resp01 = JOptionPane.showInputDialog(null,"Qual o login?", "Removendos dos items na cota", JOptionPane.QUESTION_MESSAGE);
+			
+			Conta aux_conta = new Conta(resp01);
+			aux_boolean = false;
+			index = 0;
+			
+			if (((Conta)Valorant.pesquisarConta(aux_conta.getLogin())).getItemsSize() > 0){
+				aux_boolean = true;
+				aux_list = new String[((Conta)Valorant.pesquisarConta(aux_conta.getLogin())).getItemsSize()];
+			}
+			
+			if(Valorant.getContas().contains(aux_conta) && aux_boolean) {
+				((Conta)Valorant.pesquisarConta(aux_conta.getLogin())).getItems().forEach(i->{
+					aux_list[index] = i.getNome();
+					index ++;
+				});
+				for(int i = 0; i < index; i++) {
+					
+				}
+				JOptionPane.showMessageDialog(null, "Items removido com sucesso!");
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Não foi possível remover os items!!");
+			}
+		}
+		//Removendo items das contas
+			if(evento.getSource() == item03) {
+				String resp01 = JOptionPane.showInputDialog(null,"Qual o nome do item?", "Removendo item em todas as contas", JOptionPane.QUESTION_MESSAGE);
+						
+				Item aux_item = new Item(resp01);
+				Valorant.getContas().forEach(c->{
+				if(c.getItems().contains(aux_item)) {
+						c.getItems().remove(aux_item);
+					}
+				});
+				}
+		//Adicionando Conta
+		if(evento.getSource() == conta) {
+			String resp01=JOptionPane.showInputDialog(null,"Qual o login?", "Adicionando conta", JOptionPane.QUESTION_MESSAGE);
+			Conta aux_conta = new Conta(resp01);
+			if(!(resp01==null || resp01.equals("") || Valorant.getContas().contains(aux_conta))) {
+				Valorant.adicionarConta(resp01);
+				JOptionPane.showMessageDialog(null, "Conta adicionada com sucesso!");
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Não foi possível adicionar a conta!!");
+			}
+		}
+		//Removendo Conta
+		if(evento.getSource() == conta02) {
+			String resp01=JOptionPane.showInputDialog(null,"Qual o login?", "Removendo conta", JOptionPane.QUESTION_MESSAGE);
+			Conta aux_conta = new Conta(resp01);
+			if(!(resp01==null || resp01.equals("") || !(Valorant.getContas().contains(aux_conta)))) {
+				Valorant.removerConta(aux_conta);
+				JOptionPane.showMessageDialog(null, "Conta removida com sucesso!!");
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Não foi possível remover a conta!!");
+			}
+		}
+		//Sair sem gravar
 		if(evento.getSource() == sair01) {
 			System.exit(0);
 		}
+		//Sair e gravar
+		if(evento.getSource() == sair02) {
+			System.out.print("\nGravando arquivos...");
+			try {
+				Valorant.gravarCliente();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.exit(0);
+		}	
 	}
-	
 }

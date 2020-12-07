@@ -62,6 +62,10 @@ public class Conta
 	{
 		Items.add(new Item(aux_nome, aux_valor));
 	}
+	public void adicionarItem (String aux_nome)
+	{
+		Items.add(new Item(aux_nome));
+	}
 	public int getItemsSize() {
 		return Items.size();
 	}
