@@ -52,6 +52,7 @@ public class Menu extends JFrame{
 	//Items menu listagem
 	JMenuItem menu01 = new JMenuItem("Por nome");
 	JMenuItem menu02 = new JMenuItem("Por saldo");
+	JMenuItem menu03 = new JMenuItem("Por espaço");
 	
 	//Items menu listagem
 	JMenuItem sair01 = new JMenuItem("Sair sem gravar");
@@ -63,7 +64,10 @@ public class Menu extends JFrame{
 	String aux_list[] = null;
 	
 	//Teste
+	
 	public Menu() throws IOException {
+		super();
+		
 		setJMenuBar(barra);
 		Valorant = new Cliente();
 		this.atualizarLista();
@@ -126,6 +130,7 @@ public class Menu extends JFrame{
 		barra.add(listagem);
 		listagem.add(menu01);
 		listagem.add(menu02);
+		listagem.add(menu03);
 		
 		barra.add(sair);
 		sair.add(sair01);
@@ -150,7 +155,6 @@ public class Menu extends JFrame{
 	
 	public void atualizarLista() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		//list = Valorant.listarContas();
 		list = new String[Valorant.getContas().size()];
 		index = 0;
 		Valorant.getContas().forEach(c ->{
@@ -158,7 +162,7 @@ public class Menu extends JFrame{
 			index++;
 		});
 		lista = new JList<>(list);
-		
+		lista.removeAll();
 		// Usando Classe Interna Anônima
 		lista.addListSelectionListener( new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e){
@@ -186,13 +190,32 @@ public class Menu extends JFrame{
 				campo05.setText(Valorant.pesquisarConta(lista.getSelectedValue().toString()).getCriacao().format(formatter));
 			}
 		});
+		lista.repaint();
 	}
 	
 	private void respondeAoEvento(ActionEvent evento){
+		try {
+		//Listar contas por nome
+		if(evento.getSource() == menu01) {
+			Valorant.listagemPorNome();
+			this.atualizarLista();
+			SwingUtilities.updateComponentTreeUI(tela);
+			}
+		//Listar contas por saldo
+		if(evento.getSource() == menu02) {
+			Valorant.listagemPorDinheiro();
+			this.atualizarLista();
+		}
+		//Listar contas por espaço
+		if(evento.getSource() == menu03) {
+			Valorant.listagemPorEspaco();
+			this.atualizarLista();
+		}
+		
 		//Alterar espaco de uma conta
 			if(evento.getSource() == espaco) {
-				String resp01=JOptionPane.showInputDialog(null,"Qual o login?", "Alterando o espaço", JOptionPane.QUESTION_MESSAGE);
-				int resp02=Integer.parseInt((JOptionPane.showInputDialog(null,"Qual o espaço?", "Alterando o espaço", JOptionPane.QUESTION_MESSAGE)));
+				String resp01 = JOptionPane.showInputDialog(null,"Qual o login?", "Alterando o espaço", JOptionPane.QUESTION_MESSAGE);
+				int resp02 = Integer.parseInt((JOptionPane.showInputDialog(null,"Qual o espaço?", "Alterando o espaço", JOptionPane.QUESTION_MESSAGE)));
 				
 				Conta aux_conta = new Conta(resp01);
 				if((Valorant.getContas().contains(aux_conta))) {
@@ -361,5 +384,9 @@ public class Menu extends JFrame{
 			}
 			System.exit(0);
 		}	
+	}catch (NumberFormatException e) {
+		System.out.println("Número inválido!");
+		JOptionPane.showMessageDialog(null, "Número inválido!");
+		}
 	}
 }
