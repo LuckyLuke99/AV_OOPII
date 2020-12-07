@@ -15,7 +15,7 @@ public class Menu extends JFrame{
 	FlowLayout layout;
 	
 	//Lista
-	JList<String> lista;
+	JList<String> lista = new JList();
 	JTextField campo;
 	JTextField campo02;
 	JTextField campo03;
@@ -43,7 +43,6 @@ public class Menu extends JFrame{
 	JMenuItem conta02 = new JMenuItem("Conta");
 	JMenuItem item02 = new JMenuItem("Item em conta");
 	JMenuItem item03 = new JMenuItem("Item em todas as contas");
-	JMenuItem item05 = new JMenuItem("Todos items da conta");
 	
 	//Items menu pesquisar
 	JMenuItem conta03 = new JMenuItem("Conta");
@@ -77,7 +76,7 @@ public class Menu extends JFrame{
 		layout = new FlowLayout();
 		tela.setLayout(layout);
 		
-		lista.setVisibleRowCount(5); // Define quantas linhas serão exibidas
+		lista.setVisibleRowCount(10); // Define quantas linhas serão exibidas
 		lista.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		
@@ -85,15 +84,15 @@ public class Menu extends JFrame{
 		tela.add(painelRolagem);
 		
 		//Configuracao dos campos
-		campo = new JTextField(10);
+		campo = new JTextField(5);
 		campo.setEditable(false);
-		campo02 = new JTextField(10);
+		campo02 = new JTextField(5);
 		campo02.setEditable(false);
-		campo03 = new JTextField(10);
+		campo03 = new JTextField(2);
 		campo03.setEditable(false);
-		campo04 = new JTextField(10);
+		campo04 = new JTextField(2);
 		campo04.setEditable(false);
-		campo05 = new JTextField(10);
+		campo05 = new JTextField(5);
 		campo05.setEditable(false);
 		
 		//Adicionando os campos
@@ -121,7 +120,6 @@ public class Menu extends JFrame{
 		remover.add(conta02);
 		remover.add(item02);
 		remover.add(item03);
-		remover.add(item05);
 		
 		barra.add(pesquisar);
 		pesquisar.add(conta03);
@@ -138,7 +136,7 @@ public class Menu extends JFrame{
 		
 		//Configuracao do Menu
 		setTitle("Controle de contas");
-		setSize(600,400);
+		setSize(600,250);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -157,12 +155,15 @@ public class Menu extends JFrame{
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		list = new String[Valorant.getContas().size()];
 		index = 0;
+		DefaultListModel dlm = new DefaultListModel();
 		Valorant.getContas().forEach(c ->{
+			dlm.addElement(c.getLogin());
 			list[index] = c.getLogin();
 			index++;
 		});
-		lista = new JList<>(list);
-		lista.removeAll();
+		
+		lista.setModel(dlm);;
+		
 		// Usando Classe Interna Anônima
 		lista.addListSelectionListener( new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e){
@@ -190,7 +191,6 @@ public class Menu extends JFrame{
 				campo05.setText(Valorant.pesquisarConta(lista.getSelectedValue().toString()).getCriacao().format(formatter));
 			}
 		});
-		lista.repaint();
 	}
 	
 	private void respondeAoEvento(ActionEvent evento){
@@ -198,18 +198,14 @@ public class Menu extends JFrame{
 		//Listar contas por nome
 		if(evento.getSource() == menu01) {
 			Valorant.listagemPorNome();
-			this.atualizarLista();
-			SwingUtilities.updateComponentTreeUI(tela);
 			}
 		//Listar contas por saldo
 		if(evento.getSource() == menu02) {
 			Valorant.listagemPorDinheiro();
-			this.atualizarLista();
 		}
 		//Listar contas por espaço
 		if(evento.getSource() == menu03) {
 			Valorant.listagemPorEspaco();
-			this.atualizarLista();
 		}
 		
 		//Alterar espaco de uma conta
@@ -307,33 +303,6 @@ public class Menu extends JFrame{
 				JOptionPane.showMessageDialog(null, "Não foi possível remover o item!!");
 			}
 		}
-		//Removendo dos item da conta
-		if(evento.getSource() == item05) {
-			String resp01 = JOptionPane.showInputDialog(null,"Qual o login?", "Removendos dos items na cota", JOptionPane.QUESTION_MESSAGE);
-			
-			Conta aux_conta = new Conta(resp01);
-			aux_boolean = false;
-			index = 0;
-			
-			if (((Conta)Valorant.pesquisarConta(aux_conta.getLogin())).getItemsSize() > 0){
-				aux_boolean = true;
-				aux_list = new String[((Conta)Valorant.pesquisarConta(aux_conta.getLogin())).getItemsSize()];
-			}
-			
-			if(Valorant.getContas().contains(aux_conta) && aux_boolean) {
-				((Conta)Valorant.pesquisarConta(aux_conta.getLogin())).getItems().forEach(i->{
-					aux_list[index] = i.getNome();
-					index ++;
-				});
-				for(int i = 0; i < index; i++) {
-					
-				}
-				JOptionPane.showMessageDialog(null, "Items removido com sucesso!");
-			}
-			else {
-				JOptionPane.showMessageDialog(null, "Não foi possível remover os items!!");
-			}
-		}
 		//Removendo items das contas
 			if(evento.getSource() == item03) {
 				String resp01 = JOptionPane.showInputDialog(null,"Qual o nome do item?", "Removendo item em todas as contas", JOptionPane.QUESTION_MESSAGE);
@@ -387,6 +356,12 @@ public class Menu extends JFrame{
 	}catch (NumberFormatException e) {
 		System.out.println("Número inválido!");
 		JOptionPane.showMessageDialog(null, "Número inválido!");
-		}
 	}
+		catch (Exception e) {
+			System.out.println("Digite algum valor");
+			JOptionPane.showMessageDialog(null, "Digite algum valor");
+		}
+	atualizarLista();
+	}
+	
 }
