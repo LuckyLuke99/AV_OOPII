@@ -148,7 +148,6 @@ public class Menu extends JFrame{
 		//Teste
 }
 	
-	
 	public void atualizarLista() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		//list = Valorant.listarContas();
@@ -190,6 +189,34 @@ public class Menu extends JFrame{
 	}
 	
 	private void respondeAoEvento(ActionEvent evento){
+		//Alterar espaco de uma conta
+			if(evento.getSource() == espaco) {
+				String resp01=JOptionPane.showInputDialog(null,"Qual o login?", "Alterando o espaço", JOptionPane.QUESTION_MESSAGE);
+				int resp02=Integer.parseInt((JOptionPane.showInputDialog(null,"Qual o espaço?", "Alterando o espaço", JOptionPane.QUESTION_MESSAGE)));
+				
+				Conta aux_conta = new Conta(resp01);
+				if((Valorant.getContas().contains(aux_conta))) {
+					Valorant.setEspacoConta(aux_conta, resp02);
+					JOptionPane.showMessageDialog(null, "Espaço alterado com o sucesso!");
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Não foi possível alterar o espaço!");
+				}
+			}
+		//Alterar Salado Conta
+			if(evento.getSource() == saldo) {
+				String resp01=JOptionPane.showInputDialog(null,"Qual o login?", "Removendo conta", JOptionPane.QUESTION_MESSAGE);
+				double resp02=Double.parseDouble(JOptionPane.showInputDialog(null,"Qual o saldo?", "Removendo conta", JOptionPane.QUESTION_MESSAGE));
+				
+				Conta aux_conta = new Conta(resp01);
+				if((Valorant.getContas().contains(aux_conta))) {
+					Valorant.setValorConta(aux_conta, resp02);
+					JOptionPane.showMessageDialog(null, "Saldo alterado com sucesso!");
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Não foi possível alterar saldo da conta!");
+				}
+			}
 		//Pesquisar Cota
 		if(evento.getSource() == conta03) {
 			String resp01=JOptionPane.showInputDialog(null,"Qual o login?", "Pesquisando conta", JOptionPane.QUESTION_MESSAGE);

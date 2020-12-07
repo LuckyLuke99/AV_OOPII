@@ -263,7 +263,6 @@ public class Cliente
 		});
 	}
 	
-
 	public LinkedHashSet<Conta> getContas() {
 		return Contas;
 	}
@@ -277,4 +276,5 @@ public class Cliente
 		});
 		return aux_Conta;
 	}
+	
 }
